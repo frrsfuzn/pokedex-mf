@@ -65,7 +65,9 @@ module.exports = (_, argv) => ({
       name: "list_pokemon",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./ListPokemonPage": "./src/ListPokemonPage.jsx"
+      },
       shared: {
         ...deps,
         react: {
