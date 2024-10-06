@@ -1,13 +1,13 @@
 import React from 'react'
-import Loading from './Loading'
 
 function Nav() {
   return (
     <div
-      className='p-3 rounded-md bg-slate-400'
+      className='p-3 rounded-md bg-sky-800 text-white flex justify-evenly'
     >
-      Nav
-      <Loading />
+      <span>Pokemon List</span>
+      <span>My Pokemon</span>
+      <span>My Profile</span>
     </div>
   )
 }
