@@ -1,4 +1,5 @@
 import React from 'react'
+import Loading from './Loading'
 
 function Nav() {
   return (
@@ -6,6 +7,7 @@ function Nav() {
       className='p-3 rounded-md bg-slate-400'
     >
       Nav
+      <Loading />
     </div>
   )
 }
