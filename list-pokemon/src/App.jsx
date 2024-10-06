@@ -2,13 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.scss";
+import ListPokemonPage from "./ListPokemonPage";
 
 const App = () => (
   <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: list-pokemon</div>
-    <div>Framework: react</div>
-    <div>Language: JavaScript</div>
-    <div>CSS: Tailwind</div>
+    <ListPokemonPage />
   </div>
 );
 const rootElement = document.getElementById("app")
