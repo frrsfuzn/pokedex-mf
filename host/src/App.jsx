@@ -5,7 +5,12 @@ import Nav from "./components/Nav";
 import "./index.scss";
 
 const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
+  <div className="text-3xl mx-auto max-w-md h-screen bg-slate-200 flex flex-col justify-between">
+    <div
+      className="mb-auto"
+    >
+      Content
+    </div>
     <Nav />
   </div>
 );
