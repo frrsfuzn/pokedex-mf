@@ -7,10 +7,9 @@ const deps = require("./package.json").dependencies;
 
 const printCompilationMessage = require('./compilation.config.js');
 
-module.exports = (_, argv) => ({
+module.exports = (env, argv) => ({
   output: {
-    // publicPath: "http://localhost:8080/",
-    publicPath: "https://pokedex-mf-host.vercel.app/"
+    publicPath: argv.mode === 'development' ? env.DEV_URL : env.PROD_URL
   },
 
   resolve: {
@@ -77,8 +76,8 @@ module.exports = (_, argv) => ({
       name: "host",
       filename: "remoteEntry.js",
       remotes: {
-        // "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js"
-        "listPokemon": "list_pokemon@https://pokedex-mf-list-pokemon.vercel.app/remoteEntry.js"
+        "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js"
+        // "listPokemon": "list_pokemon@https://pokedex-mf-list-pokemon.vercel.app/remoteEntry.js"
       },
       exposes: {},
       shared: {

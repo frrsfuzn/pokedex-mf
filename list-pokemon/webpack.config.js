@@ -7,10 +7,9 @@ const deps = require("./package.json").dependencies;
 
 const printCompilationMessage = require('./compilation.config.js');
 
-module.exports = (_, argv) => ({
+module.exports = (env, argv) => ({
   output: {
-    // publicPath: "http://localhost:3002/",
-    publicPath: "https://pokedex-mf-list-pokemon.vercel.app/"
+    publicPath: argv.mode === 'development' ? env.DEV_URL : env.PROD_URL
   },
 
   resolve: {
