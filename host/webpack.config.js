@@ -9,7 +9,8 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:8080/",
+    // publicPath: "http://localhost:8080/",
+    publicPath: "https://pokedex-mf-host.vercel.app/"
   },
 
   resolve: {
