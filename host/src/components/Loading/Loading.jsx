@@ -1,5 +1,5 @@
 import React from 'react'
-import Pokeball from '../assets/icons/pokeball.png';
+import Pokeball from '@/assets/icons/pokeball.png';
 
 function Loading() {
   return (

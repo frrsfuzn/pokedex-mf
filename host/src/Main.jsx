@@ -1,10 +1,11 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Nav from "./components/Nav";
 import {Routes, Route} from 'react-router-dom';
 
-import ListPokemonPage from "listPokemon/ListPokemonPage";
+import LoadingPage from '@/components/Loading/LoadingPage';
+import SafeComponent from '@/components/SafeComponent';
 
-// TODO: implement dynamic remote container
+const ListPokemonPage = React.lazy(() => import('listPokemon/ListPokemonPage'));
 
 function Main() {
   return (
@@ -12,7 +13,13 @@ function Main() {
       <Routes>
         <Route path="/">
           <Route index element={<div>Hello</div>} />
-          <Route path="find-pokemon" element={<ListPokemonPage />} />
+          <Route path="find-pokemon" element={
+            <Suspense fallback={<LoadingPage />}>
+              <SafeComponent>
+                <ListPokemonPage />
+              </SafeComponent>
+            </Suspense>
+          } />
           <Route path="my-profile" element={<div>My Profile</div>} />
         </Route>
       </Routes>

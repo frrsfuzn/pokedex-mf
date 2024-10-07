@@ -14,6 +14,9 @@ module.exports = (_, argv) => ({
 
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    alias: {
+      "@": path.resolve(__dirname, "src")
+    }
   },
 
   devServer: {
