@@ -1,17 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
+import Otp from "./components/Otp";
 
 function Main() {
   return (
-    <div className="mt-10 text-3xl mx-auto max-w-6xl">
-      <div>Name: login</div>
-      <div>Framework: react</div>
-      <div>Language: JavaScript</div>
-      <div>CSS: Tailwind</div>
+    <div className="mx-auto max-w-md h-screen flex flex-col justify-center items-center">
+      <h1 className="text-3xl mb-3">Welcome to Pokedex!</h1>
+      <h2 className="text-2xl mb-10">Please login with your Google Account</h2>
       <GoogleLogin
         onSuccess={(credentialResponse) => {
-          console.log(jwtDecode(credentialResponse.credential));
+          localStorage.setItem('credential', JSON.stringify(jwtDecode(credentialResponse.credential)));
         }}
         onError={() => {
           console.log("Login Failed");
