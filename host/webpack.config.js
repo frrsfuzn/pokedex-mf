@@ -77,7 +77,8 @@ module.exports = (_, argv) => ({
       name: "host",
       filename: "remoteEntry.js",
       remotes: {
-        "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js"
+        // "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js"
+        "listPokemon": "list_pokemon@https://pokedex-mf-list-pokemon.vercel.app/remoteEntry.js"
       },
       exposes: {},
       shared: {
