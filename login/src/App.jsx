@@ -1,15 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+
+import Main from './Main';
 
 import "./index.scss";
 
 const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: login</div>
-    <div>Framework: react</div>
-    <div>Language: JavaScript</div>
-    <div>CSS: Tailwind</div>
-  </div>
+  <GoogleOAuthProvider clientId="1019916382686-oasdh2nhustbgea276lf0t4kvcjv92fm.apps.googleusercontent.com">
+    <Main />
+  </GoogleOAuthProvider>
 );
 const rootElement = document.getElementById("app")
 if (!rootElement) throw new Error("Failed to find the root element")
