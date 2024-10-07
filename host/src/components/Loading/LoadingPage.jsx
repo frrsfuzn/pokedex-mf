@@ -4,7 +4,7 @@ import Loading from './Loading'
 
 function LoadingPage() {
   return (
-    <div className="h-screen flex justify-center items-center"><Loading /></div>
+    <div className="flex justify-center items-center w-full"><Loading /></div>
   )
 }
 

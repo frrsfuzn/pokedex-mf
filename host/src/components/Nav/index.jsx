@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavItem from "./NavItem";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const MENUS = [
   {
@@ -18,10 +18,16 @@ const MENUS = [
 ];
 
 function Nav() {
+  const location = useLocation();
+  const { hash, pathname, search } = location;
   const [tab, setTab] = useState(0);
+  useEffect(() => {
+    const currentPathIndex = MENUS.map((menu) => menu.path).indexOf(pathname)
+    if (currentPathIndex !== -1) setTab(currentPathIndex);
+  }, [])
   return (
     <div className="text-3xl mx-auto max-w-md h-screen bg-slate-200 flex flex-col justify-between">
-      <main>
+      <main className="flex-1 flex">
         <Outlet />
       </main>
       <div className="rounded-t-md text-white flex justify-evenly items-end">

@@ -18,7 +18,7 @@ function Main({ onSuccess }) {
               "credential",
               JSON.stringify(jwtDecode(credentialResponse.credential))
             );
-            onSuccess();
+            onSuccess?.();
           }}
           onError={() => {
             console.log("Login Failed");

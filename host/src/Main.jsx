@@ -7,6 +7,7 @@ import SafeComponent from "@/components/SafeComponent";
 
 const ListPokemonPage = React.lazy(() => import("listPokemon/ListPokemonPage"));
 const LoginPage = React.lazy(() => import("login/LoginPage"));
+const ProfilePage = React.lazy(() => import("profile/ProfilePage"));
 
 const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem("credential");
@@ -23,28 +24,38 @@ function Main() {
   return (
     <Routes>
       <Route path="/" element={<Nav />}>
-        <Route index element={
-          <ProtectedRoute>
-            <div>Hello</div>
-          </ProtectedRoute>
-        }/>
+        <Route
+          index
+          element={
+            <ProtectedRoute>
+              <div>Hello world</div>
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="find-pokemon"
           element={
             <ProtectedRoute>
               <Suspense fallback={<LoadingPage />}>
-                <SafeComponent>
+                <SafeComponent key="pokemonPage">
                   <ListPokemonPage />
                 </SafeComponent>
               </Suspense>
             </ProtectedRoute>
           }
         />
-        <Route path="my-profile" element={
-          <ProtectedRoute>
-            <div>My Profile</div>
-          </ProtectedRoute>
-        }/>
+        <Route
+          path="my-profile"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingPage />}>
+                <SafeComponent key="profilePage">
+                  <ProfilePage onLogOut={() => navigate("/login")} />
+                </SafeComponent>
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
       </Route>
       <Route path="/">
         <Route

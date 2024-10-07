@@ -22,7 +22,7 @@ class SafeComponent extends Component {
             // Render fallback UI
             return (
               <div
-                className="h-screen flex justify-center items-center text-center"
+                className="flex justify-center items-center text-center"
               >
                 <span>Something went wrong. Please try again later.</span>
               </div>
