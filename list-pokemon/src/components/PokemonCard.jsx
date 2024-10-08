@@ -14,10 +14,20 @@ function PokemonCard({ pokemonName }) {
   return (
     <div
       style={{ backgroundImage: `linear-gradient(to right, ${colorGradient})` }}
-      className="w-48 p-2 rounded-sm relative mt-7 h-28"
+      className="w-48 p-2 rounded-sm relative mt-7 h-20"
     >
       <div>
         <h3 className="text-2xl">{data?.name}</h3>
+        <div className="flex gap-1">
+          {data?.types.map((type) => (
+            <div
+              key={type.type.name}
+              className="bg-slate-200 rounded-xl text-sm px-1"
+            >
+              {type.type.name}
+            </div>
+          ))}
+        </div>
       </div>
       <img
         className="absolute -top-10 right-0 drop-shadow-lg"
