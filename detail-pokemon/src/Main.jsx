@@ -34,10 +34,20 @@ export default function Main() {
       </div>
       <div className="bg-white w-full rounded-t-xl -mt-16 pt-20 px-5">
         <h2>Details</h2>
-        <div>
-          <div>
-            <label>height</label>
-            <label>weight</label>
+        <div className="flex justify-start">
+          <div className="flex flex-col w-20">
+            <label className="text-xl">Height</label>
+            <label className="text-xl">Weight</label>
+            <label className="text-xl">Abilites</label>
+          </div>
+          <div className="flex flex-col">
+            <label className="text-xl">{data?.height}"</label>
+            <label className="text-xl">{data?.weight} lbs</label>
+            <label className="text-xl">
+              {data?.abilities
+                .map((ability) => ability.ability.name)
+                .join(", ")}
+            </label>
           </div>
         </div>
         <h2>Stats</h2>
