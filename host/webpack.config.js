@@ -9,7 +9,8 @@ const printCompilationMessage = require('./compilation.config.js');
 
 module.exports = (env, argv) => ({
   output: {
-    publicPath: argv.mode === 'development' ? env.DEV_URL : env.PROD_URL
+    // publicPath: argv.mode === 'development' ? env.DEV_URL : env.PROD_URL
+    publicPath: '/' // this fix issue can't go to param page
   },
 
   resolve: {
@@ -80,6 +81,7 @@ module.exports = (env, argv) => ({
         // "listPokemon": "list_pokemon@https://pokedex-mf-list-pokemon.vercel.app/remoteEntry.js",
         "login": "login@http://localhost:4000/remoteEntry.js",
         "profile": "profile@http://localhost:3000/remoteEntry.js",
+        "detailPokemon": "detail_pokemon@http://localhost:3003/remoteEntry.js"
       },
       exposes: {},
       shared: {
