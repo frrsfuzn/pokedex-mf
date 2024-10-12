@@ -26,8 +26,8 @@ function Nav() {
     if (currentPathIndex !== -1) setTab(currentPathIndex);
   }, [])
   return (
-    <div className="text-3xl mx-auto max-w-md h-screen bg-slate-200 flex flex-col justify-between">
-      <main className="flex-1 flex">
+    <div className="text-3xl mx-auto max-w-md overflow-auto h-screen bg-slate-200 flex flex-col justify-between">
+      <main className="flex-1 flex overflow-auto">
         <Outlet />
       </main>
       <div className="rounded-t-md text-white flex justify-evenly items-end">
