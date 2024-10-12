@@ -8,6 +8,7 @@ import SafeComponent from "@/components/SafeComponent";
 const ListPokemonPage = React.lazy(() => import("listPokemon/ListPokemonPage"));
 const LoginPage = React.lazy(() => import("login/LoginPage"));
 const ProfilePage = React.lazy(() => import("profile/ProfilePage"));
+const DetailPokemonPage = React.lazy(() => import("detailPokemon/DetailPokemonPage"));
 
 const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem("credential");
@@ -25,7 +26,7 @@ function Main() {
     <Routes>
       <Route path="/" element={<Nav />}>
         <Route
-          index
+          path="my-pokemon"
           element={
             <ProtectedRoute>
               <div>Hello world</div>
@@ -33,17 +34,33 @@ function Main() {
           }
         />
         <Route
-          path="find-pokemon"
-          element={
-            <ProtectedRoute>
-              <Suspense fallback={<LoadingPage />}>
-                <SafeComponent key="pokemonPage">
-                  <ListPokemonPage />
-                </SafeComponent>
-              </Suspense>
-            </ProtectedRoute>
-          }
-        />
+          path="find-pokemon" 
+        >
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
+                  <SafeComponent key="pokemonPage">
+                    <ListPokemonPage />
+                  </SafeComponent>
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path=":pokemonId"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
+                  <SafeComponent key="detailPokemonPage">
+                    <DetailPokemonPage />
+                  </SafeComponent>
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+        </Route>
         <Route
           path="my-profile"
           element={
@@ -60,7 +77,7 @@ function Main() {
       <Route path="/">
         <Route
           path="login"
-          element={<LoginPage onSuccess={() => navigate("/")} />}
+          element={<LoginPage onSuccess={() => navigate("my-pokemon")} />}
         />
       </Route>
     </Routes>

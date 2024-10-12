@@ -1,16 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import DetailPokemonPage from "./DetailPokemonPage";
 
 import "./index.scss";
 
-const App = () => (
-  <div className="mt-10 text-3xl mx-auto max-w-6xl">
-    <div>Name: detail-pokemon</div>
-    <div>Framework: react</div>
-    <div>Language: JavaScript</div>
-    <div>CSS: Tailwind</div>
-  </div>
-);
+const App = () => (<DetailPokemonPage />);
 const rootElement = document.getElementById("app")
 if (!rootElement) throw new Error("Failed to find the root element")
 
