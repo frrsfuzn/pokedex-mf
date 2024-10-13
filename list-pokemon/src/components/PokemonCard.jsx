@@ -3,7 +3,7 @@ import useFetchPokemon from "../hooks/useFetchPokemon";
 import { mapTypeToColor } from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 
-function PokemonCard({ pokemonName, isFromMyPokemon = false }) {
+function PokemonCard({ pokemonName, name, isFromMyPokemon = false }) {
   const { data, isLoading } = useFetchPokemon(pokemonName);
   const navigate = useNavigate();
   const colorGradient =
@@ -25,7 +25,7 @@ function PokemonCard({ pokemonName, isFromMyPokemon = false }) {
       onClick={redirectToDetail}
     >
       <div>
-        <h3 className="text-2xl">{data?.name}</h3>
+        <h3 className="text-2xl">{isFromMyPokemon ? name : data?.name}</h3>
         <div className="flex gap-1">
           {data?.types.map((type) => (
             <div
