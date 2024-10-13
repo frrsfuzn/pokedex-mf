@@ -5,6 +5,7 @@ import PopupName from "./components/Popup/PopupName";
 import StatItem from "./components/StatItem";
 import useFetchPokemon from "./hooks/useFetchPokemon";
 import { mapTypeToColor, mapStatToColor } from "./utils/colors";
+import { toast } from 'react-toastify';
 
 export default function Main({ mode }) {
   const { pokemonId } = useParams();
@@ -38,6 +39,9 @@ export default function Main({ mode }) {
           localStorage.setItem('credential', JSON.stringify(parsedUser));
           setIsPopupNameOpen(false);
         } else {
+          toast.error('Name already in use!', {
+            position: 'top-center'
+          })
           console.log('exist!')
         }
       } else {
