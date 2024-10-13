@@ -42,7 +42,6 @@ export default function Main({ mode }) {
           toast.error('Name already in use!', {
             position: 'top-center'
           })
-          console.log('exist!')
         }
       } else {
         parsedUser = {

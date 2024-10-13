@@ -66,7 +66,8 @@ module.exports = (env, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./ListPokemonPage": "./src/ListPokemonPage.jsx"
+        "./ListPokemonPage": "./src/ListPokemonPage.jsx",
+        "./PokemonCard": "./src/components/PokemonCard.jsx"
       },
       shared: {
         ...deps,

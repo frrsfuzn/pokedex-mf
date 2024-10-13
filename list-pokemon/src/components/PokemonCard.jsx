@@ -3,8 +3,7 @@ import useFetchPokemon from "../hooks/useFetchPokemon";
 import { mapTypeToColor } from "../utils/colors";
 import { useNavigate } from "react-router-dom";
 
-
-function PokemonCard({ pokemonName }) {
+function PokemonCard({ pokemonName, isFromMyPokemon = false }) {
   const { data, isLoading } = useFetchPokemon(pokemonName);
   const navigate = useNavigate();
   const colorGradient =
@@ -15,8 +14,10 @@ function PokemonCard({ pokemonName }) {
           mapTypeToColor(data?.types[0].type.name),
         ].join(",");
   const redirectToDetail = () => {
-    navigate(`/find-pokemon/${pokemonName}`)
-  }
+    isFromMyPokemon
+      ? navigate(`/my-pokemon/${pokemonName}`)
+      : navigate(`/find-pokemon/${pokemonName}`);
+  };
   return (
     <div
       style={{ backgroundImage: `linear-gradient(to right, ${colorGradient})` }}

@@ -8,7 +8,10 @@ import SafeComponent from "@/components/SafeComponent";
 const ListPokemonPage = React.lazy(() => import("listPokemon/ListPokemonPage"));
 const LoginPage = React.lazy(() => import("login/LoginPage"));
 const ProfilePage = React.lazy(() => import("profile/ProfilePage"));
-const DetailPokemonPage = React.lazy(() => import("detailPokemon/DetailPokemonPage"));
+const DetailPokemonPage = React.lazy(() =>
+  import("detailPokemon/DetailPokemonPage")
+);
+const MyPokemonPage = React.lazy(() => import("myPokemon/MyPokemonPage"));
 
 const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem("credential");
@@ -26,17 +29,33 @@ function Main() {
     <Routes>
       <Route path="/" element={<Nav />}>
         <Route index element={<Navigate to="/my-pokemon" />} />
-        <Route
-          path="my-pokemon"
-          element={
-            <ProtectedRoute>
-              <div>Hello world</div>
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="find-pokemon" 
-        >
+        <Route path="my-pokemon">
+          <Route
+            index
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
+                  <SafeComponent key="myPokemonPage">
+                    <MyPokemonPage />
+                  </SafeComponent>
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path=":pokemonId"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
+                  <SafeComponent key="detailPokemonPage">
+                    <DetailPokemonPage mode="myPokemon" />
+                  </SafeComponent>
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+        <Route path="find-pokemon">
           <Route
             index
             element={
@@ -55,7 +74,7 @@ function Main() {
               <ProtectedRoute>
                 <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="detailPokemonPage">
-                    <DetailPokemonPage mode="test" />
+                    <DetailPokemonPage mode="listPokemon" />
                   </SafeComponent>
                 </Suspense>
               </ProtectedRoute>
