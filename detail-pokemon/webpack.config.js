@@ -14,6 +14,9 @@ module.exports = (_, argv) => ({
 
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
+    alias: {
+      "@": path.resolve(__dirname, "src")
+    }
   },
 
   devServer: {
@@ -56,6 +59,14 @@ module.exports = (_, argv) => ({
         use: {
           loader: "babel-loader",
         },
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
       },
     ],
   },
