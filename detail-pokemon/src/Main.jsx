@@ -1,14 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import CatchBall from "./components/CatchBall";
+import PopupName from "./components/Popup/PopupName";
 import StatItem from "./components/StatItem";
 import useFetchPokemon from "./hooks/useFetchPokemon";
 import { mapTypeToColor, mapStatToColor } from "./utils/colors";
 
-export default function Main() {
+export default function Main({ mode }) {
   const { pokemonId } = useParams();
   const { data, isLoading } = useFetchPokemon(pokemonId);
-  if (!data) return <div>Loading...</div>;
+  const [isPopupNameOpen, setIsPopupNameOpen] = useState(false);
+  const [name, setName] = useState('');
+  if (isLoading) return <div>Loading...</div>;
+  if (!data) return <div>No Data!</div>;
+
+
   const colorGradient =
     data?.types.length > 1
       ? data.types.map((type) => mapTypeToColor(type.type.name)).join(",")
@@ -16,8 +22,44 @@ export default function Main() {
           mapTypeToColor(data?.types[0].type.name),
           mapTypeToColor(data?.types[0].type.name),
         ].join(",");
+  
+  const onClicked = () => {
+    setIsPopupNameOpen(true);
+
+  }
+
+  const onSave = () => {
+    const user = localStorage.getItem("credential");
+    if (user) {
+      let parsedUser = JSON.parse(user);
+      if (parsedUser?.catchedPokemon) {
+        if (!parsedUser.catchedPokemon[name]) {
+          parsedUser.catchedPokemon[name] = data?.name
+          localStorage.setItem('credential', JSON.stringify(parsedUser));
+          setIsPopupNameOpen(false);
+        } else {
+          console.log('exist!')
+        }
+      } else {
+        parsedUser = {
+          ...parsedUser,
+          catchedPokemon: {
+            [name]: data?.name
+          }
+        };
+        localStorage.setItem('credential', JSON.stringify(parsedUser));
+        setIsPopupNameOpen(false);
+      }
+    }
+  }
+
+  const onNameChange = (e) => {
+    const value = e.target.value;
+    setName(value);
+  }
+  
   return (
-    <div className="w-full flex flex-col">
+    <div className="w-full flex flex-col relative">
       <div className="w-full overflow-auto flex-1">
         <div
           style={{
@@ -87,7 +129,14 @@ export default function Main() {
           </div>
         </div>
       </div>
-      <CatchBall />
+      <CatchBall onClicked={onClicked} mode={mode} />
+      <PopupName
+        isOpen={isPopupNameOpen}
+        pokemonName={data?.name}
+        nameValue={name}
+        onNameChange={onNameChange}
+        onSave={onSave}
+      />
     </div>
   );
 }

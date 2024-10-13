@@ -4,10 +4,10 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 
 const queryClient = new QueryClient();
 
-function DetailPokemonPage() {
+function DetailPokemonPage({ mode }) {
   return (
     <QueryClientProvider client={queryClient}>
-      <Main />
+      <Main mode={mode} />
     </QueryClientProvider>
   );
 }
