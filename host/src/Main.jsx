@@ -25,6 +25,7 @@ function Main() {
   return (
     <Routes>
       <Route path="/" element={<Nav />}>
+        <Route index element={<Navigate to="/my-pokemon" />} />
         <Route
           path="my-pokemon"
           element={
@@ -54,7 +55,7 @@ function Main() {
               <ProtectedRoute>
                 <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="detailPokemonPage">
-                    <DetailPokemonPage />
+                    <DetailPokemonPage mode="test" />
                   </SafeComponent>
                 </Suspense>
               </ProtectedRoute>
