@@ -1,7 +1,8 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import StatItem from "./components/StatItem";
 import useFetchPokemon from "./hooks/useFetchPokemon";
-import { mapTypeToColor } from "./utils/colors";
+import { mapTypeToColor, mapStatToColor } from "./utils/colors";
 
 export default function Main() {
   const { pokemonId } = useParams();
@@ -26,11 +27,18 @@ export default function Main() {
           <h2>{data.name}</h2>
           <h2>#{data.id}</h2>
         </div>
-        <img
-          className="drop-shadow-lg"
-          src={data?.sprites?.other?.home?.front_default}
-          width={200}
-        />
+        <div className="flex">
+          <img
+            className="drop-shadow-lg"
+            src={data?.sprites?.other?.showdown?.back_default}
+            width={150}
+          />
+          <img
+            className="drop-shadow-lg"
+            src={data?.sprites?.other?.showdown?.front_default}
+            width={150}
+          />
+        </div>
       </div>
       <div className="bg-white w-full rounded-t-xl -mt-16 pt-20 px-5">
         <h2>Details</h2>
@@ -51,26 +59,10 @@ export default function Main() {
           </div>
         </div>
         <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
-        <h2>Stats</h2>
+        {data?.stats?.map(({ stat, base_stat }) => {
+          const { baseColor, barColor } = mapStatToColor(stat.name);
+          return <StatItem key={stat.name} baseColor={baseColor} barColor={barColor} label={stat.name} value={base_stat} />
+        })}
       </div>
     </div>
   );

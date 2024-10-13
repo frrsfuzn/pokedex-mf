@@ -21,3 +21,33 @@ export const mapTypeToColor = (type) => {
   };
   return colours[type];
 };
+
+export const mapStatToColor = (stat_name) => {
+  const colorData = {
+    'hp': {
+      baseColor: '#3C6255',
+      barColor: '#46C2CB'
+    },
+    'attack': {
+      baseColor: '#850000',
+      barColor: '#FF597B'
+    },
+    'defense': {
+      baseColor: '#263159',
+      barColor: '#DAE2B6'
+    },
+    'special-attack': {
+      baseColor: '#540375',
+      barColor: '#FF7000'
+    },
+    'special-defense': {
+      baseColor: '#497174',
+      barColor: '#8D9EFF'
+    },
+    'speed': {
+      baseColor: '#78350f',
+      barColor: '#EB6440'
+    }
+  }
+  return colorData[stat_name] || { baseColor: '#efefef', barColor: 'skyblue' };
+}
