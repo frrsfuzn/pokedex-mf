@@ -1,20 +1,52 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CatchBall from "./components/CatchBall";
 import PopupName from "./components/Popup/PopupName";
 import StatItem from "./components/StatItem";
 import useFetchPokemon from "./hooks/useFetchPokemon";
 import { mapTypeToColor, mapStatToColor } from "./utils/colors";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { FaPencilAlt } from "react-icons/fa";
 
 export default function Main({ mode }) {
+  const isListPokemon = mode === "listPokemon";
+
   const { pokemonId } = useParams();
-  const { data, isLoading } = useFetchPokemon(pokemonId);
+  const navigate = useNavigate();
+
   const [isPopupNameOpen, setIsPopupNameOpen] = useState(false);
-  const [name, setName] = useState('');
+  const [name, setName] = useState(isListPokemon ? "" : pokemonId);
+  const [pokemonName, setPokemonName] = useState(
+    isListPokemon ? pokemonId : null
+  );
+
+  const { data, isLoading, refetch } = useFetchPokemon(
+    pokemonName,
+    isListPokemon
+  );
+
+  useEffect(() => {
+    if (!isListPokemon) {
+      const user = localStorage.getItem("credential");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        const catchedPokemon = parsedUser?.catchedPokemon;
+        if (catchedPokemon) {
+          setPokemonName(catchedPokemon[pokemonId]);
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isListPokemon && pokemonName !== null) {
+      refetch();
+    }
+  }, [pokemonName]);
+
   if (isLoading) return <div>Loading...</div>;
   if (!data) return <div>No Data!</div>;
-
 
   const colorGradient =
     data?.types.length > 1
@@ -23,11 +55,10 @@ export default function Main({ mode }) {
           mapTypeToColor(data?.types[0].type.name),
           mapTypeToColor(data?.types[0].type.name),
         ].join(",");
-  
+
   const onClicked = () => {
     setIsPopupNameOpen(true);
-
-  }
+  };
 
   const onSave = () => {
     const user = localStorage.getItem("credential");
@@ -35,32 +66,38 @@ export default function Main({ mode }) {
       let parsedUser = JSON.parse(user);
       if (parsedUser?.catchedPokemon) {
         if (!parsedUser.catchedPokemon[name]) {
-          parsedUser.catchedPokemon[name] = data?.name
-          localStorage.setItem('credential', JSON.stringify(parsedUser));
+          parsedUser.catchedPokemon[name] = data?.name;
+          if (!isListPokemon) {
+            delete parsedUser.catchedPokemon[pokemonId];
+            localStorage.setItem("credential", JSON.stringify(parsedUser));
+            navigate(`/my-pokemon/${name}`, { replace: true });
+          } else {
+            localStorage.setItem("credential", JSON.stringify(parsedUser));
+          }
           setIsPopupNameOpen(false);
         } else {
-          toast.error('Name already in use!', {
-            position: 'top-center'
-          })
+          toast.error("Name already in use!", {
+            position: "top-center",
+          });
         }
       } else {
         parsedUser = {
           ...parsedUser,
           catchedPokemon: {
-            [name]: data?.name
-          }
+            [name]: data?.name,
+          },
         };
-        localStorage.setItem('credential', JSON.stringify(parsedUser));
+        localStorage.setItem("credential", JSON.stringify(parsedUser));
         setIsPopupNameOpen(false);
       }
     }
-  }
+  };
 
   const onNameChange = (e) => {
     const value = e.target.value;
     setName(value);
-  }
-  
+  };
+
   return (
     <div className="w-full flex flex-col relative">
       <div className="w-full overflow-auto flex-1">
@@ -71,7 +108,22 @@ export default function Main({ mode }) {
           className="flex flex-col items-center"
         >
           <div className="flex justify-between items-center p-5 w-full">
-            <h2>{data.name}</h2>
+            {isListPokemon ? (
+              <h2>{data.name}</h2>
+            ) : (
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2>{pokemonId}</h2>
+                  <button
+                    onClick={() => setIsPopupNameOpen(true)}
+                    className="text-sm"
+                  >
+                    <FaPencilAlt />
+                  </button>
+                </div>
+                <h3 className="text-xl text-slate-50">{pokemonName}</h3>
+              </div>
+            )}
             <h2>#{data.id}</h2>
           </div>
           <div className="flex">
@@ -125,14 +177,19 @@ export default function Main({ mode }) {
           <h2 className="mt-10">Moves</h2>
           <div className="flex flex-wrap gap-2">
             {data?.moves?.map(({ move }) => (
-              <div key={move.name} className="text-xl px-2 rounded-full bg-sky-900 text-white text-nowrap">
+              <div
+                key={move.name}
+                className="text-xl px-2 rounded-full bg-sky-900 text-white text-nowrap"
+              >
                 {move.name}
               </div>
             ))}
           </div>
         </div>
       </div>
-      <CatchBall onClicked={onClicked} mode={mode} />
+      {mode === "listPokemon" && (
+        <CatchBall onClicked={onClicked} mode={mode} />
+      )}
       <PopupName
         isOpen={isPopupNameOpen}
         pokemonName={data?.name}

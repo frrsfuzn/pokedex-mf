@@ -15,7 +15,7 @@ function PokemonCard({ pokemonName, name, isFromMyPokemon = false }) {
         ].join(",");
   const redirectToDetail = () => {
     isFromMyPokemon
-      ? navigate(`/my-pokemon/${pokemonName}`)
+      ? navigate(`/my-pokemon/${name}`)
       : navigate(`/find-pokemon/${pokemonName}`);
   };
   return (
