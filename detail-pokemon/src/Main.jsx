@@ -196,6 +196,8 @@ export default function Main({ mode }) {
         nameValue={name}
         onNameChange={onNameChange}
         onSave={onSave}
+        onCancel={() => setIsPopupNameOpen(false)}
+        isListPokemon={isListPokemon}
       />
     </div>
   );
