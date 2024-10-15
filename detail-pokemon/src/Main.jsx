@@ -2,12 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import CatchBall from "./components/CatchBall";
 import PopupName from "./components/Popup/PopupName";
-import StatItem from "./components/StatItem";
 import useFetchPokemon from "./hooks/useFetchPokemon";
-import { mapTypeToColor, mapStatToColor } from "./utils/colors";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { FaPencilAlt } from "react-icons/fa";
+import BannerPokemon from "./components/BannerPokemon";
+import DetailPokemon from "./components/DetailPokemon";
 
 export default function Main({ mode }) {
   const isListPokemon = mode === "listPokemon";
@@ -47,14 +46,6 @@ export default function Main({ mode }) {
 
   if (isLoading) return <div>Loading...</div>;
   if (!data) return <div>No Data!</div>;
-
-  const colorGradient =
-    data?.types.length > 1
-      ? data.types.map((type) => mapTypeToColor(type.type.name)).join(",")
-      : [
-          mapTypeToColor(data?.types[0].type.name),
-          mapTypeToColor(data?.types[0].type.name),
-        ].join(",");
 
   const onClicked = () => {
     setIsPopupNameOpen(true);
@@ -101,91 +92,14 @@ export default function Main({ mode }) {
   return (
     <div className="w-full flex flex-col relative">
       <div className="w-full overflow-auto flex-1">
-        <div
-          style={{
-            backgroundImage: `linear-gradient(to right, ${colorGradient})`,
-          }}
-          className="flex flex-col items-center"
-        >
-          <div className="flex justify-between items-center p-5 w-full">
-            {isListPokemon ? (
-              <h2>{data.name}</h2>
-            ) : (
-              <div>
-                <div className="flex items-center gap-2">
-                  <h2>{pokemonId}</h2>
-                  <button
-                    onClick={() => setIsPopupNameOpen(true)}
-                    className="text-sm"
-                  >
-                    <FaPencilAlt />
-                  </button>
-                </div>
-                <h3 className="text-xl text-slate-50">{pokemonName}</h3>
-              </div>
-            )}
-            <h2>#{data.id}</h2>
-          </div>
-          <div className="flex">
-            <img
-              className="drop-shadow-lg"
-              src={data?.sprites?.other?.showdown?.back_default}
-              width={150}
-            />
-            <img
-              className="drop-shadow-lg"
-              src={data?.sprites?.other?.showdown?.front_default}
-              width={150}
-            />
-          </div>
-        </div>
-        <div className="bg-white w-full rounded-t-xl -mt-16 pt-20 px-5 pb-10">
-          <h2>Details</h2>
-          <div className="flex justify-start">
-            <div className="flex flex-col w-20">
-              <label className="text-xl">Height</label>
-              <label className="text-xl">Weight</label>
-              <label className="text-xl">Abilites</label>
-              <label className="text-xl">Types</label>
-            </div>
-            <div className="flex flex-col">
-              <label className="text-xl">{data?.height}"</label>
-              <label className="text-xl">{data?.weight} lbs</label>
-              <label className="text-xl">
-                {data?.abilities
-                  .map((ability) => ability.ability.name)
-                  .join(", ")}
-              </label>
-              <label className="text-xl">
-                {data?.types?.map(({ type }) => type.name).join(", ")}
-              </label>
-            </div>
-          </div>
-          <h2 className="mt-10">Stats</h2>
-          {data?.stats?.map(({ stat, base_stat }) => {
-            const { baseColor, barColor } = mapStatToColor(stat.name);
-            return (
-              <StatItem
-                key={stat.name}
-                baseColor={baseColor}
-                barColor={barColor}
-                label={stat.name}
-                value={base_stat}
-              />
-            );
-          })}
-          <h2 className="mt-10">Moves</h2>
-          <div className="flex flex-wrap gap-2">
-            {data?.moves?.map(({ move }) => (
-              <div
-                key={move.name}
-                className="text-xl px-2 rounded-full bg-sky-900 text-white text-nowrap"
-              >
-                {move.name}
-              </div>
-            ))}
-          </div>
-        </div>
+        <BannerPokemon
+          data={data}
+          isListPokemon={isListPokemon}
+          onEditClick={() => setIsPopupNameOpen(true)}
+          pokemonName={pokemonName}
+          pokemonId={pokemonId}
+        />
+        <DetailPokemon data={data} />
       </div>
       {mode === "listPokemon" && (
         <CatchBall onClicked={onClicked} mode={mode} />

@@ -8,7 +8,6 @@ function CatchBall({ onClicked }) {
     let timer;
     if (isClick) {
       timer = setTimeout(() => {
-        console.log("success");
         onClicked?.();
         setIsClick(false);
       }, 1000);
