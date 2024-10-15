@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
 
-function Otp() {
+function Otp({ correctValue, onCorrect }) {
   const [otp, setOtp] = useState("");
+  useEffect(() => {
+    if (otp === correctValue) {
+      onCorrect?.();
+    }
+  }, [otp])
   return (
     <div className="flex flex-col items-center">
       <h3 className="mb-3">Enter your one-time-password</h3>
