@@ -4,6 +4,7 @@ import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 
 import LoadingPage from "@/components/Loading/LoadingPage";
 import SafeComponent from "@/components/SafeComponent";
+import useStore from "host/store";
 
 const ListPokemonPage = React.lazy(() => import("listPokemon/ListPokemonPage"));
 const LoginPage = React.lazy(() => import("login/LoginPage"));
@@ -14,7 +15,7 @@ const DetailPokemonPage = React.lazy(() =>
 const MyPokemonPage = React.lazy(() => import("myPokemon/MyPokemonPage"));
 
 const ProtectedRoute = ({ children }) => {
-  const user = localStorage.getItem("credential");
+  const user = useStore((state) => state.user);
   if (!user) {
     return <Navigate to={"/login"} replace />;
   }
@@ -24,10 +25,11 @@ const ProtectedRoute = ({ children }) => {
 
 function Main() {
   const navigate = useNavigate();
+  const user = useStore((state) => state.user);
 
   return (
     <Routes>
-      <Route path="/" element={<Nav />}>
+      <Route path="/" element={user ? <Nav /> : undefined}>
         <Route index element={<Navigate to="/my-pokemon" />} />
         <Route path="my-pokemon">
           <Route
@@ -95,8 +97,6 @@ function Main() {
             </Suspense>
           }
         />
-      </Route>
-      <Route path="/">
         <Route
           path="login"
           element={

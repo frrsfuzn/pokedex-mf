@@ -4,7 +4,7 @@ import { persist, createJSONStoragel } from "zustand/middleware";
 const useStore = create(
   persist(
     (set) => ({
-      user: {},
+      user: null,
       catchedPokemon: {},
       setUser: (user) => set({ user }),
       editUserName: (name) =>
@@ -32,7 +32,7 @@ const useStore = create(
             state.catchedPokemon;
           return { catchedPokemon: newCatchedPokemon };
         }),
-      reset: () => set({ user: {}, catchedPokemon: {} }),
+      reset: () => set({ user: null, catchedPokemon: {} }),
     }),
     {
       name: "userData",

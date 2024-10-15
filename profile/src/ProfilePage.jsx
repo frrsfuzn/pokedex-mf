@@ -2,8 +2,13 @@ import React, { useEffect, useState } from "react";
 import FormInput from "./components/FormInput";
 import ProfilePicture from "./components/ProfilePicture";
 
+import useStore from 'host/store';
+
 function ProfilePage({ onLogOut }) {
-  const user = localStorage.getItem("credential");
+  const user = useStore((state) => state.user);
+  const reset = useStore((state) => state.reset);
+  const editUserName = useStore((state) => state.editUserName);
+  const editUserPicture = useStore((state) => state.editUserPicture);
 
   if (!user) return <h1 className="text-3xl">Unauthorized Access!</h1>;
 
@@ -11,7 +16,7 @@ function ProfilePage({ onLogOut }) {
   const [isEdit, setIsEdit] = useState(false);
 
   const logOut = () => {
-    localStorage.removeItem("credential");
+    reset();
     onLogOut?.();
   };
 
@@ -29,18 +34,16 @@ function ProfilePage({ onLogOut }) {
   }
 
   useEffect(() => {
-    const parsedJson = JSON.parse(user);
     setUserData({
-      name: parsedJson.name,
-      picture: parsedJson.picture,
+      name: user.name,
+      picture: user.picture,
     });
   }, []);
 
   useEffect(() => {
     if (!isEdit) {
-      const parsedJson = JSON.parse(user);
-      const newUserData = {...parsedJson, ...userData}; 
-      localStorage.setItem('credential', JSON.stringify(newUserData));
+      editUserName(userData.name);
+      editUserPicture(userData.picture);
     }
   }, [userData, isEdit]);
 
