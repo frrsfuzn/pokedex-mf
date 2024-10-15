@@ -19,10 +19,11 @@ const MENUS = [
 
 function Nav() {
   const location = useLocation();
-  const { hash, pathname, search } = location;
+  const { pathname } = location;
   const [tab, setTab] = useState(0);
   useEffect(() => {
-    const currentPathIndex = MENUS.map((menu) => menu.path).indexOf(pathname)
+    const currentPath = `/${pathname.split('/')[1]}`;
+    const currentPathIndex = MENUS.map((menu) => menu.path).indexOf(currentPath)
     if (currentPathIndex !== -1) setTab(currentPathIndex);
   }, [])
   return (
