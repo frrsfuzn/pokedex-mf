@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import BannerPokemon from "./components/BannerPokemon";
 import DetailPokemon from "./components/DetailPokemon";
+import { isFibb } from "./utils/number";
 
 export default function Main({ mode }) {
   const isListPokemon = mode === "listPokemon";
@@ -48,12 +49,16 @@ export default function Main({ mode }) {
   if (!data) return <div>No Data!</div>;
 
   const onClicked = () => {
-    if (Math.random() < 0.2) {
-      setIsPopupNameOpen(true);
+    if (isListPokemon) {
+      if (Math.random() < 0.2) {
+        setIsPopupNameOpen(true);
+      } else {
+        toast.error("Sorry... the Pokémon ran away :(", {
+          position: "top-center",
+        });
+      }
     } else {
-      toast.error("Sorry... the Pokémon ran away :(", {
-        position: "top-center",
-      });
+      onReleasePokemon();
     }
   };
 
@@ -95,6 +100,37 @@ export default function Main({ mode }) {
     setName(value);
   };
 
+  const onReleasePokemon = () => {
+    const randomNum = Math.floor(Math.random() * 10);
+    if (isFibb(randomNum)) {
+      const user = localStorage.getItem("credential");
+      if (user) {
+        let parsedUser = JSON.parse(user);
+        if (parsedUser?.catchedPokemon) {
+          delete parsedUser.catchedPokemon[pokemonId];
+          localStorage.setItem("credential", JSON.stringify(parsedUser));
+        }
+      }
+      toast.success(
+        `Success releasing pokemon! Going back now... Code ${randomNum}`,
+        {
+          position: "top-center",
+          closeButton: false,
+          onClose: () => {
+            navigate("/my-pokemon", { replace: true });
+          },
+        }
+      );
+    } else {
+      toast.error(
+        `Sorry... Your pokemon in a bad mood, try again later. Code #${randomNum}`,
+        {
+          position: "top-center",
+        }
+      );
+    }
+  };
+
   return (
     <div className="w-full flex flex-col relative">
       <div className="w-full overflow-auto flex-1">
@@ -107,9 +143,7 @@ export default function Main({ mode }) {
         />
         <DetailPokemon data={data} />
       </div>
-      {mode === "listPokemon" && (
-        <CatchBall onClicked={onClicked} mode={mode} />
-      )}
+      <CatchBall onClicked={onClicked} isListPokemon={isListPokemon} />
       <PopupName
         isOpen={isPopupNameOpen}
         pokemonName={data?.name}
