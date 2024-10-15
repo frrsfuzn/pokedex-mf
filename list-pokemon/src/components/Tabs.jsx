@@ -20,7 +20,7 @@ function Tabs({ tabs, currentTab, onChange }) {
     <div className="flex flex-col w-full px-3 gap-3">
       <ul className="hidden text-sm font-medium text-center text-gray-500 rounded-lg overflow-hidden shadow sm:flex dark:divide-gray-700 ">
         {tabs.map((tab) => {
-          return <Tab name={tab} onClick={() => onChange(tab)} isActive={tab === currentTab} />
+          return <Tab key={tab} name={tab} onClick={() => onChange(tab)} isActive={tab === currentTab} />
         })} 
       </ul>
     </div>

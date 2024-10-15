@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AllPokemon from "./components/AllPokemon";
+import SearchByName from "./components/SearchByName";
 import Tabs from "./components/Tabs";
 
 const TABS = [
@@ -16,6 +17,7 @@ function Main() {
       This is the page of list of pokemon
       <Tabs tabs={TABS} currentTab={tab} onChange={(curr) => setTab(curr)} />
       {tab === TABS[0] && <AllPokemon />}
+      {tab === TABS[1] && <SearchByName />}
     </div>
   );
 }

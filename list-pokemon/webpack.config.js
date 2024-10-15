@@ -64,7 +64,9 @@ module.exports = (env, argv) => ({
     new ModuleFederationPlugin({
       name: "list_pokemon",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        'host': 'host@http://localhost:8080/remoteEntry.js'
+      },
       exposes: {
         "./ListPokemonPage": "./src/ListPokemonPage.jsx",
         "./PokemonCard": "./src/components/PokemonCard.jsx"
