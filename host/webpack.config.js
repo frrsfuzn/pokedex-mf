@@ -85,7 +85,8 @@ module.exports = (env, argv) => ({
         "host": "host@http://localhost:8080/remoteEntry.js"
       },
       exposes: {
-        './store': './src/store'
+        './store': './src/store',
+        './toast': './src/utils/toast.js'
       },
       shared: {
         ...deps,

@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import OtpInput from "react-otp-input";
+import toast from "host/toast";
 
 function Otp({ correctValue, onCorrect }) {
   const [otp, setOtp] = useState("");
   useEffect(() => {
-    if (otp === correctValue) {
-      onCorrect?.();
+    if (otp.length === 4) {
+      if (otp === correctValue) {
+        toast.success("Success login!");
+        onCorrect?.();
+      } else {
+        toast.error("Invalid OTP!");
+      }
     }
-  }, [otp])
+  }, [otp]);
   return (
     <div className="flex flex-col items-center">
       <h3 className="mb-3">Enter your one-time-password</h3>

@@ -35,25 +35,25 @@ function Main() {
           <Route
             index
             element={
-              <Suspense fallback={<LoadingPage />}>
-                <ProtectedRoute>
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="myPokemonPage">
                     <MyPokemonPage />
                   </SafeComponent>
-                </ProtectedRoute>
-              </Suspense>
+                </Suspense>
+              </ProtectedRoute>
             }
           />
           <Route
             path=":pokemonId"
             element={
-              <Suspense fallback={<LoadingPage />}>
-                <ProtectedRoute>
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="detailPokemonPage">
                     <DetailPokemonPage mode="myPokemon" />
                   </SafeComponent>
-                </ProtectedRoute>
-              </Suspense>
+                </Suspense>
+              </ProtectedRoute>
             }
           />
         </Route>
@@ -61,48 +61,50 @@ function Main() {
           <Route
             index
             element={
-              <Suspense fallback={<LoadingPage />}>
-                <ProtectedRoute>
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="pokemonPage">
                     <ListPokemonPage />
                   </SafeComponent>
-                </ProtectedRoute>
-              </Suspense>
+                </Suspense>
+              </ProtectedRoute>
             }
           />
           <Route
             path=":pokemonId"
             element={
-              <Suspense fallback={<LoadingPage />}>
-                <ProtectedRoute>
+              <ProtectedRoute>
+                <Suspense fallback={<LoadingPage />}>
                   <SafeComponent key="detailPokemonPage">
                     <DetailPokemonPage mode="listPokemon" />
                   </SafeComponent>
-                </ProtectedRoute>
-              </Suspense>
+                </Suspense>
+              </ProtectedRoute>
             }
           />
         </Route>
         <Route
           path="my-profile"
           element={
-            <Suspense fallback={<LoadingPage />}>
-              <ProtectedRoute>
+            <ProtectedRoute>
+              <Suspense fallback={<LoadingPage />}>
                 <SafeComponent key="profilePage">
                   <ProfilePage
                     onLogOut={() => navigate("/login", { replace: true })}
                   />
                 </SafeComponent>
-              </ProtectedRoute>
-            </Suspense>
+              </Suspense>
+            </ProtectedRoute>
           }
         />
         <Route
           path="login"
           element={
-            <LoginPage
-              onSuccess={() => navigate("my-pokemon", { replace: true })}
-            />
+            <Suspense fallback={<LoadingPage />}>
+              <LoginPage
+                onSuccess={() => navigate("my-pokemon", { replace: true })}
+              />
+            </Suspense>
           }
         />
       </Route>

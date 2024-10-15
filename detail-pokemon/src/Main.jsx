@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import CatchBall from "./components/CatchBall";
 import PopupName from "./components/Popup/PopupName";
 import useFetchPokemon from "./hooks/useFetchPokemon";
-import { toast } from "react-toastify";
+import toast from "host/toast";
 import { useNavigate } from "react-router-dom";
 import BannerPokemon from "./components/BannerPokemon";
 import DetailPokemon from "./components/DetailPokemon";
@@ -49,7 +49,7 @@ export default function Main({ mode }) {
 
   const onClicked = () => {
     if (isListPokemon) {
-      if (Math.random() < 0.9) {
+      if (Math.random() < 0.2) {
         setIsPopupNameOpen(true);
       } else {
         toast.error("Sorry... the Pokémon ran away :(", {
@@ -89,7 +89,6 @@ export default function Main({ mode }) {
       toast.success(
         `Success releasing pokemon! Going back now... Code ${randomNum}`,
         {
-          position: "top-center",
           closeButton: false,
           onClose: () => {
             navigate("/my-pokemon", { replace: true });
@@ -98,10 +97,7 @@ export default function Main({ mode }) {
       );
     } else {
       toast.error(
-        `Sorry... Your pokemon in a bad mood, try again later. Code #${randomNum}`,
-        {
-          position: "top-center",
-        }
+        `Sorry... Your pokemon in a bad mood, try again later. Code #${randomNum}`
       );
     }
   };
