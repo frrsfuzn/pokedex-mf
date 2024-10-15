@@ -64,7 +64,9 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "login",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "host": "host@http://localhost:8080/remoteEntry.js"
+      },
       exposes: {
         "./LoginPage": "./src/Main.jsx"
       },

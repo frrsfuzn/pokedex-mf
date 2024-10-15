@@ -84,7 +84,9 @@ module.exports = (env, argv) => ({
         "detailPokemon": "detail_pokemon@http://localhost:3003/remoteEntry.js",
         "myPokemon": "my_pokemon@http://localhost:3001/remoteEntry.js"
       },
-      exposes: {},
+      exposes: {
+        './store': './src/store'
+      },
       shared: {
         ...deps,
         react: {

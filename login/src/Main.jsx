@@ -4,8 +4,11 @@ import { jwtDecode } from "jwt-decode";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import Otp from "./components/Otp";
 
+import useStore from 'host/store';
+
 function Main({ onSuccess }) {
   const [credential, setCredential] = useState(null);
+  const setUser = useStore((state) => state.setUser);
   return (
     <GoogleOAuthProvider clientId="1019916382686-oasdh2nhustbgea276lf0t4kvcjv92fm.apps.googleusercontent.com">
       <div className="mx-auto max-w-md h-screen flex flex-col justify-center items-center bg-slate-200">
@@ -18,6 +21,7 @@ function Main({ onSuccess }) {
             correctValue="1234"
             onCorrect={() => {
               localStorage.setItem("credential", JSON.stringify(credential));
+              setUser(credential);
               onSuccess?.();
             }}
           />
