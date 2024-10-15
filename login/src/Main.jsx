@@ -20,7 +20,6 @@ function Main({ onSuccess }) {
           <Otp
             correctValue="1234"
             onCorrect={() => {
-              localStorage.setItem("credential", JSON.stringify(credential));
               setUser(credential);
               onSuccess?.();
             }}

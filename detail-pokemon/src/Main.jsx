@@ -8,9 +8,15 @@ import { useNavigate } from "react-router-dom";
 import BannerPokemon from "./components/BannerPokemon";
 import DetailPokemon from "./components/DetailPokemon";
 import { isFibb } from "./utils/number";
+import useStore from "host/store";
 
 export default function Main({ mode }) {
   const isListPokemon = mode === "listPokemon";
+
+  const catchedPokemon = useStore((state) => state.catchedPokemon);
+  const addPokemon = useStore((state) => state.addPokemon);
+  const renamePokemon = useStore((state) => state.renamePokemon);
+  const deletePokemon = useStore((state) => state.deletePokemon);
 
   const { pokemonId } = useParams();
   const navigate = useNavigate();
@@ -28,14 +34,7 @@ export default function Main({ mode }) {
 
   useEffect(() => {
     if (!isListPokemon) {
-      const user = localStorage.getItem("credential");
-      if (user) {
-        const parsedUser = JSON.parse(user);
-        const catchedPokemon = parsedUser?.catchedPokemon;
-        if (catchedPokemon) {
-          setPokemonName(catchedPokemon[pokemonId]);
-        }
-      }
+      setPokemonName(catchedPokemon[pokemonId]);
     }
   }, []);
 
@@ -50,7 +49,7 @@ export default function Main({ mode }) {
 
   const onClicked = () => {
     if (isListPokemon) {
-      if (Math.random() < 0.2) {
+      if (Math.random() < 0.9) {
         setIsPopupNameOpen(true);
       } else {
         toast.error("Sorry... the Pokémon ran away :(", {
@@ -63,35 +62,18 @@ export default function Main({ mode }) {
   };
 
   const onSave = () => {
-    const user = localStorage.getItem("credential");
-    if (user) {
-      let parsedUser = JSON.parse(user);
-      if (parsedUser?.catchedPokemon) {
-        if (!parsedUser.catchedPokemon[name]) {
-          parsedUser.catchedPokemon[name] = data?.name;
-          if (!isListPokemon) {
-            delete parsedUser.catchedPokemon[pokemonId];
-            localStorage.setItem("credential", JSON.stringify(parsedUser));
-            navigate(`/my-pokemon/${name}`, { replace: true });
-          } else {
-            localStorage.setItem("credential", JSON.stringify(parsedUser));
-          }
-          setIsPopupNameOpen(false);
-        } else {
-          toast.error("Name already in use!", {
-            position: "top-center",
-          });
-        }
+    if (!catchedPokemon[name]) {
+      if (!isListPokemon) {
+        renamePokemon(name, pokemonId);
+        navigate(`/my-pokemon/${name}`, { replace: true });
       } else {
-        parsedUser = {
-          ...parsedUser,
-          catchedPokemon: {
-            [name]: data?.name,
-          },
-        };
-        localStorage.setItem("credential", JSON.stringify(parsedUser));
-        setIsPopupNameOpen(false);
+        addPokemon(name, pokemonId);
       }
+      setIsPopupNameOpen(false);
+    } else {
+      toast.error("Name already in use!", {
+        position: "top-center",
+      });
     }
   };
 
@@ -103,14 +85,7 @@ export default function Main({ mode }) {
   const onReleasePokemon = () => {
     const randomNum = Math.floor(Math.random() * 10);
     if (isFibb(randomNum)) {
-      const user = localStorage.getItem("credential");
-      if (user) {
-        let parsedUser = JSON.parse(user);
-        if (parsedUser?.catchedPokemon) {
-          delete parsedUser.catchedPokemon[pokemonId];
-          localStorage.setItem("credential", JSON.stringify(parsedUser));
-        }
-      }
+      deletePokemon(pokemonId);
       toast.success(
         `Success releasing pokemon! Going back now... Code ${randomNum}`,
         {

@@ -65,7 +65,8 @@ module.exports = (_, argv) => ({
       name: "my_pokemon",
       filename: "remoteEntry.js",
       remotes: {
-        "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js"
+        "listPokemon": "list_pokemon@http://localhost:3002/remoteEntry.js",
+        "host": "host@http://localhost:8080/remoteEntry.js"
       },
       exposes: {
         './MyPokemonPage': './src/MyPokemonPage.jsx'

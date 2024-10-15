@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStoragel } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 const useStore = create(
   persist(
@@ -11,13 +11,13 @@ const useStore = create(
         set((state) => ({ user: { ...state.user, name } })),
       editUserPicture: (picture) =>
         set((state) => ({ user: { ...state.user, picture } })),
-      addPokemon: (pokemon) =>
+      addPokemon: (name, pokemonName) =>
         set((state) => ({
-          catchedPokemon: { ...state.catchedPokemon, pokemon },
+          catchedPokemon: { ...state.catchedPokemon, [name]: pokemonName },
         })),
       renamePokemon: (newName, oldName) =>
         set((state) => {
-          const { [pokemonName]: _, ...newCatchedPokemon } =
+          const { [oldName]: _, ...newCatchedPokemon } =
             state.catchedPokemon;
           return {
             catchedPokemon: {

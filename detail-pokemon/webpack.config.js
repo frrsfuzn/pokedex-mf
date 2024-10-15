@@ -75,7 +75,9 @@ module.exports = (_, argv) => ({
     new ModuleFederationPlugin({
       name: "detail_pokemon",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "host": "host@http://localhost:8080/remoteEntry.js"
+      },
       exposes: {
         "./DetailPokemonPage": "./src/DetailPokemonPage.jsx"
       },
