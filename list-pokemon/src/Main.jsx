@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AllPokemon from "./components/AllPokemon";
+import FilterByType from "./components/FilterByType";
 import SearchByName from "./components/SearchByName";
 import Tabs from "./components/Tabs";
 
@@ -14,10 +15,10 @@ function Main() {
 
   return (
     <div className="flex items-center flex-col w-full py-3">
-      This is the page of list of pokemon
       <Tabs tabs={TABS} currentTab={tab} onChange={(curr) => setTab(curr)} />
       {tab === TABS[0] && <AllPokemon />}
       {tab === TABS[1] && <SearchByName />}
+      {tab === TABS[2] && <FilterByType />}
     </div>
   );
 }

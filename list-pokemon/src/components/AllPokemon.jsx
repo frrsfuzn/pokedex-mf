@@ -4,7 +4,7 @@ import useFetchAllPokemon from "../hooks/useFetchListPokemon";
 
 function AllPokemon() {
   const [page, setPage] = useState(0);
-  const { status, data } = useFetchAllPokemon(page, 8);
+  const { status, data } = useFetchAllPokemon(page, 10);
 
   const onPrev = () => {
     if (page > 0) {
@@ -20,7 +20,7 @@ function AllPokemon() {
 
   return (
     <div>
-      <div className="flex flex-row justify-around flex-wrap w-full mt-5 mb-5">
+      <div className="flex flex-row justify-around flex-wrap w-full mt-3 mb-3">
         {data?.results.map((pokemon) => (
           <PokemonCard key={pokemon.name} pokemonName={pokemon.name} />
         ))}
