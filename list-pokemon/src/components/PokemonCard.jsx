@@ -2,8 +2,10 @@ import React from "react";
 import useFetchPokemon from "../hooks/useFetchPokemon";
 import { mapTypeToColor } from "../utils/colors";
 import { useNavigate } from "react-router-dom";
+import { FaPencilAlt } from "react-icons/fa";
+import { CgPokemon } from "react-icons/cg";
 
-function PokemonCard({ pokemonName, name, isFromMyPokemon = false }) {
+function PokemonCard({ pokemonName, name, isFromMyPokemon = false, onEdit, onRelease }) {
   const { data, isLoading } = useFetchPokemon(pokemonName);
   const navigate = useNavigate();
   const colorGradient =
@@ -21,11 +23,12 @@ function PokemonCard({ pokemonName, name, isFromMyPokemon = false }) {
   return (
     <div
       style={{ backgroundImage: `linear-gradient(to right, ${colorGradient})` }}
-      className="w-48 p-2 rounded-md relative mt-7 h-20 cursor-pointer"
-      onClick={redirectToDetail}
+      className="flex justify-between w-48 p-2 rounded-md relative mt-7 h-20"
     >
       <div>
-        <h3 className="text-2xl">{isFromMyPokemon ? name : data?.name}</h3>
+        <h3 onClick={redirectToDetail} className="text-2xl cursor-pointer">
+          {isFromMyPokemon ? name : data?.name}
+        </h3>
         <div className="flex gap-1">
           {data?.types.map((type) => (
             <div
@@ -42,6 +45,18 @@ function PokemonCard({ pokemonName, name, isFromMyPokemon = false }) {
         src={data?.sprites?.other?.home?.front_default}
         width={80}
       />
+      {isFromMyPokemon && (
+        <div className="flex items-end">
+          <div className="flex text-sm gap-2">
+            <button onClick={onEdit} className="bg-white p-1.5 rounded-full">
+              <FaPencilAlt />
+            </button>
+            <button onClick={onRelease} className="bg-white p-1.5 rounded-full">
+              <CgPokemon />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
