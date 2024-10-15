@@ -1,13 +1,16 @@
 import React, { Suspense, useEffect, useState } from "react";
 import PopupName from "./components/Popup/PopupName";
 import SafeComponent from "./components/SafeComponent";
-import { useNavigate } from "react-router-dom";
+import { isFibb } from './utils/number';
 
 
 const PokemonCard = React.lazy(() => import("listPokemon/PokemonCard"));
 
 function Main() {
-  const navigate = useNavigate();
+
+  const [count, setCount] = useState(0);
+
+  const forceUpdate = () => setCount((prev) => prev + 1);
 
   const [myPokemon, setMyPokemon] = useState({});
   const [selectedPokemon, setSelectedPokemon] = useState('');
@@ -19,7 +22,7 @@ function Main() {
       const parsedUser = JSON.parse(user);
       setMyPokemon(parsedUser?.catchedPokemon || {});
     }
-  }, [isPopupNameOpen]);
+  }, [isPopupNameOpen, count]);
 
   const onEditClick = (name) => {
     setIsPopupNameOpen(true);
@@ -49,7 +52,21 @@ function Main() {
   }
 
   const onReleaseClick = (name) => {
-    console.log('release', name)
+    const randomNum = Math.floor(Math.random() * 10);
+    if (isFibb(randomNum)) {
+      const user = localStorage.getItem("credential");
+      if (user) {
+        let parsedUser = JSON.parse(user);
+        if (parsedUser?.catchedPokemon) {
+          delete parsedUser.catchedPokemon[name];
+          localStorage.setItem("credential", JSON.stringify(parsedUser));
+          forceUpdate();
+          console.log('success');
+        }
+      }
+    } else {
+      console.log('sorry')
+    }
   }
 
   return (
