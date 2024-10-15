@@ -48,7 +48,13 @@ export default function Main({ mode }) {
   if (!data) return <div>No Data!</div>;
 
   const onClicked = () => {
-    setIsPopupNameOpen(true);
+    if (Math.random() < 0.2) {
+      setIsPopupNameOpen(true);
+    } else {
+      toast.error("Sorry... the Pokémon ran away :(", {
+        position: "top-center",
+      });
+    }
   };
 
   const onSave = () => {
