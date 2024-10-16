@@ -10,7 +10,8 @@ const printCompilationMessage = require('./compilation.config.js');
 module.exports = (env, argv) => ({
   output: {
     // publicPath: argv.mode === 'development' ? env.DEV_URL : env.PROD_URL
-    publicPath: '/' // this fix issue can't go to param page
+    // publicPath: '/' // this fix issue can't go to param page
+    publicPath: 'http://localhost:8080/'
   },
 
   resolve: {
