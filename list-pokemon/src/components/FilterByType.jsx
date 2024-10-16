@@ -50,6 +50,7 @@ function FilterByType() {
           />
         </div>
       </div>
+      {isLoading && <h1>Loading...</h1>}
       <div className="flex flex-wrap justify-between my-5">
         {pokemon.slice(page * MAX_PER_PAGE, (page + 1) * MAX_PER_PAGE).map((poke) => (
           <PokemonCard key={poke} pokemonName={poke} />
