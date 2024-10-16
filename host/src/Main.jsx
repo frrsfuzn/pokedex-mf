@@ -107,6 +107,16 @@ function Main() {
             </Suspense>
           }
         />
+        <Route
+          path="*"
+          element={
+            <ProtectedRoute>
+              <div className="w-full h-full flex justify-center items-center">
+                <h1 className="text-3xl">Page not found :(</h1>
+              </div>
+            </ProtectedRoute>
+          }
+        />
       </Route>
     </Routes>
   );
