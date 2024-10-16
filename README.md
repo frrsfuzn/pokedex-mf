@@ -6,3 +6,5 @@
 2. Go to root folder (pokedex-mf) and install the depedencies 
 3. Run command `npm run start-all` on root folder then open localhost:8080
 4. Login with your google account
+
+Created by Mochamad Farras Fauzan
