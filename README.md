@@ -1,10 +1,40 @@
-# Pokedex in Microfrontend
+# Pokedex Microfrontend Application
 
-## Steps
+This project is a **Pokedex** application built using a microfrontend architecture. Follow the steps below to set up and run the application locally.
 
-1. Go to every micro frontend folder and install their depedencies
-2. Go to root folder (pokedex-mf) and install the depedencies 
-3. Run command `npm run start-all` on root folder then open localhost:8080
-4. Login with your google account
+## Setup Instructions
 
-Created by Mochamad Farras Fauzan
+### 1. Install Dependencies
+
+- Navigate to each microfrontend folder within the project and install the dependencies by running:
+
+    ```bash
+    npm install
+    ```
+
+- Then, navigate to the **root** folder (`pokedex-mf`) and install its dependencies:
+
+    ```bash
+    npm install
+    ```
+
+### 2. Run the Application
+
+- In the **root** folder (`pokedex-mf`), run the following command to start all microfrontends simultaneously:
+
+    ```bash
+    npm run start-all
+    ```
+
+- Open your browser and go to `http://localhost:8080`.
+
+### 3. Login
+
+- Login using your **Google account**.
+- Enter `1234` as the OTP value.
+
+---
+
+### Author
+
+Developed by **Mochamad Farras Fauzan**
