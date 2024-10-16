@@ -4,6 +4,10 @@ This project is a **Pokedex** application built using a microfrontend architectu
 
 ## Setup Instructions
 
+### 0. Environment
+
+- Node v20.10.0
+
 ### 1. Install Dependencies
 
 - Navigate to each microfrontend folder within the project and install the dependencies by running:
