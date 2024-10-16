@@ -5,7 +5,13 @@ import { useNavigate } from "react-router-dom";
 import { FaPencilAlt } from "react-icons/fa";
 import { CgPokemon } from "react-icons/cg";
 
-function PokemonCard({ pokemonName, name, isFromMyPokemon = false, onEdit, onRelease }) {
+function PokemonCard({
+  pokemonName,
+  name,
+  isFromMyPokemon = false,
+  onEdit,
+  onRelease,
+}) {
   const { data, isLoading } = useFetchPokemon(pokemonName);
   const navigate = useNavigate();
   const colorGradient =
@@ -15,6 +21,7 @@ function PokemonCard({ pokemonName, name, isFromMyPokemon = false, onEdit, onRel
           mapTypeToColor(data?.types[0].type.name),
           mapTypeToColor(data?.types[0].type.name),
         ].join(",");
+  const loadingGradient = '#787878,#c4c4c4'
   const redirectToDetail = () => {
     isFromMyPokemon
       ? navigate(`/my-pokemon/${name}`)
@@ -22,7 +29,9 @@ function PokemonCard({ pokemonName, name, isFromMyPokemon = false, onEdit, onRel
   };
   return (
     <div
-      style={{ backgroundImage: `linear-gradient(to right, ${colorGradient})` }}
+      style={{
+        backgroundImage: `linear-gradient(to right, ${isLoading ? loadingGradient : colorGradient})`
+      }}
       className="flex justify-between w-48 p-2 rounded-md relative mt-7 h-20"
     >
       <div>
