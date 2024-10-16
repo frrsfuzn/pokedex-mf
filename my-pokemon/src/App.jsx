@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 
 import "./index.scss";
-import './MyPokemonPage'
+import MyPokemonPage from './MyPokemonPage'
 
 const App = () => (<MyPokemonPage />);
 const rootElement = document.getElementById("app")
