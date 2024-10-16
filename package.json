@@ -1,0 +1,20 @@
+{
+  "name": "pokedex-mf",
+  "version": "1.0.0",
+  "description": "pokedex but in microfrontend",
+  "main": "index.js",
+  "scripts": {
+    "start:host": "cd host && npm start",
+    "start:detail": "cd detail-pokemon && npm start",
+    "start:list": "cd list-pokemon && npm start",
+    "start:login": "cd login && npm start",
+    "start:myPokemon": "cd my-pokemon && npm start",
+    "start:profile": "cd profile && npm start",
+    "start-all": "concurrently \"npm run start:*\""
+  },
+  "author": "Mochamad Farras Fauzan",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
