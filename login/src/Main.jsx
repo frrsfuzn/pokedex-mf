@@ -27,7 +27,8 @@ function Main({ onSuccess }) {
         ) : (
           <GoogleLogin
             onSuccess={(credentialResponse) => {
-              setCredential(jwtDecode(credentialResponse.credential));
+              const credential = jwtDecode(credentialResponse.credential);
+              setCredential({ name: credential.name, picture: credential.picture });
             }}
             onError={() => {
               console.log("Login Failed");
